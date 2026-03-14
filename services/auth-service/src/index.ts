@@ -4,12 +4,13 @@ import { logger } from '@/utils/logger';
 import { createServer } from 'http';
 import { closeDatabase, connectToDatabase } from "@/db/sequelize";
 import { initModels } from "@/models";
-import { closePublisher } from "@/messaging/event-publishing";
+import { closePublisher, initPublisher } from "@/messaging/event-publishing";
 
 const main = async () => {
     try {
         await connectToDatabase();
         await initModels();
+        await initPublisher();
 
         const app = createApp();
         const server = createServer(app);

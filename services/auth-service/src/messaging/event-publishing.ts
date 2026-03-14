@@ -41,6 +41,32 @@ export const initPublisher = async () => {
     logger.info('Auth service RabbitMQ publisher initialized');
 };
 
+export const publishUserRegistered = (payload: AuthUserRegisteredPayload) => {
+    if (!channel) {
+        logger.warn('RabbitMQ channel is not initialized. Cannot publish message.');
+        return;
+    }
+
+    const event = {
+        type: AUTH_USER_REGISTERED_ROUTING_KEY,
+        payload,
+        occuredAt: new Date().toISOString(),
+        metadata: { version: 1 },
+    };
+
+    const published = channel.publish(
+        AUTH_EVENT_EXCHANGE,
+        AUTH_USER_REGISTERED_ROUTING_KEY,
+        Buffer.from(JSON.stringify(event)),
+        { contentType: 'application/json', persistent: true },
+    );
+
+    if (!published) {
+        logger.warn({ event }, 'Failed to publish user registered event');
+    } else {
+        logger.info({ event }, 'Published user registered event');
+    }
+};
 
 export const closePublisher = async () => {
     try {

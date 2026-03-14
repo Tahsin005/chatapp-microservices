@@ -7,6 +7,7 @@ import { Op, Transaction } from 'sequelize';
 
 import { logger } from '@/utils/logger';
 import { hashPassword, signAccessToken, signRefreshToken, verifyPassword, verifyRefreshToken } from '@/utils/token';
+import { publishUserRegistered } from '@/messaging/event-publishing';
 
 const REFRESH_TOKEN_TTL_DAYS = 30;
 
@@ -48,7 +49,7 @@ export const register = async (input: RegisterInput): Promise<AuthResponse> => {
             createdAt: user.createdAt.toISOString(),
         };
 
-        // TODO: publish event UserRegistered
+        publishUserRegistered(userData);
 
         return {
             accessToken,
