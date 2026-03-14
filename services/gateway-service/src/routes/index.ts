@@ -1,5 +1,3 @@
-import { env } from '@/config/env';
-import { authProxyService } from '@/services/auth-proxy.service';
 import type { Router } from 'express';
 import { authRouter } from '@/routes/auth.routes';
 

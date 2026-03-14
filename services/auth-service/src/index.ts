@@ -4,7 +4,7 @@ import { logger } from '@/utils/logger';
 import { createServer } from 'http';
 import { closeDatabase, connectToDatabase } from "@/db/sequelize";
 import { initModels } from "@/models";
-
+import { closePublisher } from "@/messaging/event-publishing";
 
 const main = async () => {
     try {
@@ -23,7 +23,7 @@ const main = async () => {
         const shutdown = () => {
             logger.info('Shutting down auth service...');
 
-            Promise.all([closeDatabase()])
+            Promise.all([closeDatabase(), closePublisher()])
                 .catch((error: unknown) => {
                     logger.error({ error }, 'Error during shutdown tasks');
                 })
