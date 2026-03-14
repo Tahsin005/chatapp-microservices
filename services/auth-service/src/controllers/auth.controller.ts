@@ -1,5 +1,5 @@
 import { login, refreshTokens, register, revokeRefreshToken } from '@/services/auth.service';
-import { LoginInput, RegisterInput } from '@/types/auth';
+import { LoginInput, RegisterInput, RefreshInput, RevokeInput } from '@/types/auth';
 import { asyncHandler, HttpError } from '@chatapp/common';
 import { RequestHandler } from 'express';
 
@@ -16,19 +16,19 @@ export const loginHandler: RequestHandler = asyncHandler(async (req, res) => {
 });
 
 export const refreshHandler: RequestHandler = asyncHandler(async (req, res) => {
-    const { refreshToken } = req.body as { refreshToken?: string };
-    if (!refreshToken) {
+    const payload = req.body as RefreshInput;
+    if (!payload.refreshToken) {
         throw new HttpError(400, 'refreshToken is required');
     }
-    const tokens = await refreshTokens(refreshToken);
+    const tokens = await refreshTokens(payload);
     res.json(tokens);
 });
 
 export const revokeHandler: RequestHandler = asyncHandler(async (req, res) => {
-    const { userId } = req.body as { userId?: string };
-    if (!userId) {
+    const payload = req.body as RevokeInput;
+    if (!payload.userId) {
         throw new HttpError(400, 'userId is required');
     }
-    await revokeRefreshToken(userId);
+    await revokeRefreshToken(payload);
     res.status(204).send();
 });

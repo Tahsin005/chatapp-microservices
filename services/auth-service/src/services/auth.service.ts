@@ -1,6 +1,6 @@
 import { sequelize } from '@/db/sequelize';
 import { RefreshToken, UserCredentials } from '@/models';
-import { AuthResponse, AuthTokens, LoginInput, RegisterInput } from '@/types/auth';
+import { AuthResponse, AuthTokens, LoginInput, RefreshInput, RegisterInput, RevokeInput } from '@/types/auth';
 
 import { HttpError } from '@chatapp/common';
 import { Op, Transaction } from 'sequelize';
@@ -86,8 +86,8 @@ export const login = async (input: LoginInput): Promise<AuthTokens> => {
     };
 };
 
-export const refreshTokens = async (token: string): Promise<AuthTokens> => {
-    const payload = verifyRefreshToken(token);
+export const refreshTokens = async (input: RefreshInput): Promise<AuthTokens> => {
+    const payload = verifyRefreshToken(input.refreshToken);
 
     const tokenRecord = await RefreshToken.findOne({
         where: { tokenId: payload.tokenId, userId: payload.sub },
@@ -118,8 +118,8 @@ export const refreshTokens = async (token: string): Promise<AuthTokens> => {
     };
 };
 
-export const revokeRefreshToken = async (userId: string) => {
-    await RefreshToken.destroy({ where: { userId } });
+export const revokeRefreshToken = async (input: RevokeInput) => {
+    await RefreshToken.destroy({ where: { userId: input.userId } });
 };
 
 

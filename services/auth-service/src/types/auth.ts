@@ -7,13 +7,21 @@ export interface RegisterInput {
 export interface LoginInput {
     email: string;
     password: string;
-    }
+}
 
 export interface UserData {
     id: string;
     email: string;
     displayName: string;
     createdAt: string;
+}
+
+export interface RefreshInput {
+    refreshToken: string;
+}
+
+export interface RevokeInput {
+    userId?: string;
 }
 
 export interface AuthTokens {
