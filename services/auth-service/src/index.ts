@@ -2,10 +2,12 @@ import { env } from "@/config/env";
 import { createApp } from "@/app";
 import { logger } from '@/utils/logger';
 import { createServer } from 'http';
+import { closeDatabase, connectToDatabase } from "@/db/sequilize";
 
 
 const main = async () => {
     try {
+        await connectToDatabase();
         const app = createApp();
         const server = createServer(app);
 
@@ -18,7 +20,7 @@ const main = async () => {
         const shutdown = () => {
             logger.info('Shutting down auth service...');
 
-            Promise.all([])
+            Promise.all([closeDatabase()])
                 .catch((error: unknown) => {
                     logger.error({ error }, 'Error during shutdown tasks');
                 })
