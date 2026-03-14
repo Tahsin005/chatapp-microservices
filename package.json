@@ -2,6 +2,7 @@
   "name": "chat-app-microservices",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "scripts": {
     "build": "pnpm -r --workspace-root=false run build",
     "dev": "pnpm -r --workspace-root=false run dev",

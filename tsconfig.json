@@ -4,5 +4,7 @@
     "composite": true
   },
   "files": [],
-  "references": []
+  "references": [
+    { "path": "./packages/common" }
+  ]
 }
