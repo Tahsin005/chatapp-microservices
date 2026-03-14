@@ -6,5 +6,5 @@ export const registerRoutes = (app: Router) => {
         res.status(200).json({ status: 'ok', service: 'auth-service' });
     });
 
-    app.use('/auth', authRouter);
+    app.use('', authRouter);
 };
