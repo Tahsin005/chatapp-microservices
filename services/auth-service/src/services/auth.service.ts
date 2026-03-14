@@ -48,6 +48,8 @@ export const register = async (input: RegisterInput): Promise<AuthResponse> => {
             createdAt: user.createdAt.toISOString(),
         };
 
+        // TODO: publish event UserRegistered
+
         return {
             accessToken,
             refreshToken,
