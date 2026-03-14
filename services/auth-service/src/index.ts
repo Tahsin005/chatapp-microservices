@@ -17,6 +17,14 @@ const main = async () => {
 
         const shutdown = () => {
             logger.info('Shutting down auth service...');
+
+            Promise.all([])
+                .catch((error: unknown) => {
+                    logger.error({ error }, 'Error during shutdown tasks');
+                })
+                .finally(() => {
+                    server.close(() => process.exit(0));
+                });
         };
 
         process.on('SIGINT', shutdown);
