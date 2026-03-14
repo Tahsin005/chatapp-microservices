@@ -6,7 +6,7 @@ import { HttpError } from '@chatapp/common';
 import { Op, Transaction } from 'sequelize';
 
 import { logger } from '@/utils/logger';
-import { hashPassword, signAccessToken, signRefreshToken } from '@/utils/token';
+import { hashPassword, signAccessToken, signRefreshToken, verifyPassword, verifyRefreshToken } from '@/utils/token';
 
 const REFRESH_TOKEN_TTL_DAYS = 30;
 
@@ -57,6 +57,31 @@ export const register = async (input: RegisterInput): Promise<AuthResponse> => {
         await transaction.rollback();
         throw error;
     }
+};
+
+export const login = async (input: LoginInput): Promise<AuthTokens> => {
+    const credential = await UserCredentials.findOne({ where: { email: { [Op.eq]: input.email } } });
+    if (!credential) {
+        throw new HttpError(401, 'Invalid credentials');
+    }
+
+    const valid = await verifyPassword(input.password, credential.passwordHash);
+    if (!valid) {
+        throw new HttpError(401, 'Invalid credentials');
+    }
+
+    const refreshTokenRecord = await createRefreshToken(credential.id);
+
+    const accessToken = signAccessToken({ sub: credential.id, email: credential.email });
+    const refreshToken = signRefreshToken({
+        sub: credential.id,
+        tokenId: refreshTokenRecord.tokenId,
+    });
+
+    return {
+        accessToken,
+        refreshToken,
+    };
 };
 
 
