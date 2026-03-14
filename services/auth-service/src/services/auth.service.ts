@@ -84,6 +84,42 @@ export const login = async (input: LoginInput): Promise<AuthTokens> => {
     };
 };
 
+export const refreshTokens = async (token: string): Promise<AuthTokens> => {
+    const payload = verifyRefreshToken(token);
+
+    const tokenRecord = await RefreshToken.findOne({
+        where: { tokenId: payload.tokenId, userId: payload.sub },
+    });
+
+    if (!tokenRecord) {
+        throw new HttpError(401, 'Invalid refresh token');
+    }
+
+    if (tokenRecord.expiresAt.getTime() < Date.now()) {
+        await tokenRecord.destroy();
+        throw new HttpError(401, 'Refresh token has expired');
+    }
+
+    const credential = await UserCredentials.findByPk(payload.sub);
+
+    if (!credential) {
+        logger.warn({ userId: payload.sub }, 'User missing for refresh token');
+        throw new HttpError(401, 'Invalid refresh token');
+    }
+
+    await tokenRecord.destroy();
+    const newTokenRecord = await createRefreshToken(credential.id);
+
+    return {
+        accessToken: signAccessToken({ sub: credential.id, email: credential.email }),
+        refreshToken: signRefreshToken({ sub: credential.id, tokenId: newTokenRecord.tokenId }),
+    };
+};
+
+export const revokeRefreshToken = async (userId: string) => {
+    await RefreshToken.destroy({ where: { userId } });
+};
+
 
 const createRefreshToken = async (userId: string, transaction?: Transaction) => {
     const expiresAt = new Date();
