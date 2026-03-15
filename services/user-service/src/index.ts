@@ -2,7 +2,7 @@ import { env } from '@/config/env';
 import { createApp } from '@/app';
 import { createServer } from 'http';
 import { logger } from '@/utils/logger';
-import { initializeDatabase } from '@/db';
+import { closeDatabase, initializeDatabase } from '@/db';
 
 const main = async () => {
   try {
@@ -18,7 +18,7 @@ const main = async () => {
 
         const shutdown = () => {
         logger.info('Shutting down user service...');
-        Promise.all([])
+        Promise.all([closeDatabase()])
             .catch((error: unknown) => {
                 logger.error({ error }, 'Error during shutdown tasks');
             })
