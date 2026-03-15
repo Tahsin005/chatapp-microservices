@@ -3,12 +3,15 @@ import { createApp } from '@/app';
 import { createServer } from 'http';
 import { logger } from '@/utils/logger';
 import { closeDatabase, initializeDatabase } from '@/db';
-import { initMessaging } from './messaging/event-publisher';
+import { closeMessaging, initMessaging } from '@/messaging/event-publisher';
+import { startAuthEventConsumer, stopAuthEventConsume } from '@/messaging/auth-consumer';
 
 const main = async () => {
   try {
         await initializeDatabase();
         await initMessaging();
+        await startAuthEventConsumer();
+        
         const app = createApp();
         const server = createServer(app);
 
@@ -20,7 +23,7 @@ const main = async () => {
 
         const shutdown = () => {
         logger.info('Shutting down user service...');
-        Promise.all([closeDatabase()])
+        Promise.all([closeDatabase(), stopAuthEventConsume(), closeMessaging()])
             .catch((error: unknown) => {
                 logger.error({ error }, 'Error during shutdown tasks');
             })

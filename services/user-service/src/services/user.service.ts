@@ -59,6 +59,19 @@ class UserService {
             excludeIds: params.excludeIds,
         });
     }
+
+    async syncFromAuthUser(payload: AuthUserRegisteredPayload): Promise<User> {
+        const user = await this.repository.upsertFromAuthEvent(payload);
+
+        void publishUserCreatedEvent({
+            id: user.id,
+            email: user.email,
+            displayName: user.displayName,
+            createdAt: user.createdAt.toISOString(),
+            updatedAt: user.updatedAt.toISOString(),
+        });
+        return user;
+    }
 }
 
 export const userService = new UserService(userRepository);
