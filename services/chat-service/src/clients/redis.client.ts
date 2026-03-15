@@ -2,7 +2,6 @@ import Redis from 'ioredis';
 
 import { env } from '@/config/env';
 import { logger } from '@/utils/logger';
-import { log } from 'console';
 
 let redis: Redis | null = null;
 
