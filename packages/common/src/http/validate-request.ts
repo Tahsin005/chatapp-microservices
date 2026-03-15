@@ -30,12 +30,12 @@ export const validateRequest = (schemas: RequestValidationSchemas) => {
 
             if (schemas.params) {
                 const parsedParams = schemas.params.parse(req.params) as ParamsRecord;
-                req.params = parsedParams as Request["params"];
+                Object.assign(req.params, parsedParams);
             }
 
             if (schemas.query) {
                 const parsedQuery = schemas.query.parse(req.query) as QueryRecord;
-                req.query = parsedQuery as Request["query"];
+                Object.assign(req.query, parsedQuery);
             }
 
             next();
@@ -51,5 +51,5 @@ export const validateRequest = (schemas: RequestValidationSchemas) => {
 
             next(error);
         }
-  };
+    };
 };

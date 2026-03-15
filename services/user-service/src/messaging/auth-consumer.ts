@@ -16,6 +16,7 @@ import {
 import { env } from '@/config/env';
 import { logger } from '@/utils/logger';
 import { userService } from '@/services/user.service';
+import { log } from 'node:console';
 
 type ManageConnection = Connection & ChannelModel;
 
@@ -37,6 +38,8 @@ const handleMessage = async (message: ConsumeMessage, ch: Channel) => {
     const event = JSON.parse(raw) as AuthRegisteredEvent;
 
     await userService.syncFromAuthUser(event.payload);
+
+    logger.info({ event },'Processed auth user registered event');
 
     ch.ack(message);
 };
