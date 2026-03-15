@@ -2,9 +2,11 @@ import { env } from '@/config/env';
 import { createApp } from '@/app';
 import { createServer } from 'http';
 import { logger } from '@/utils/logger';
+import { initializeDatabase } from '@/db';
 
 const main = async () => {
   try {
+        await initializeDatabase();
         const app = createApp();
         const server = createServer(app);
 
