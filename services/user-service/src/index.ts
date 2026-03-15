@@ -3,10 +3,12 @@ import { createApp } from '@/app';
 import { createServer } from 'http';
 import { logger } from '@/utils/logger';
 import { closeDatabase, initializeDatabase } from '@/db';
+import { initMessaging } from './messaging/event-publisher';
 
 const main = async () => {
   try {
         await initializeDatabase();
+        await initMessaging();
         const app = createApp();
         const server = createServer(app);
 

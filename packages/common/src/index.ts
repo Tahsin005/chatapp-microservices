@@ -6,6 +6,7 @@ export * from './http/async-handler';
 export * from './http/internal-auth';
 export * from './events/event-types';
 export * from './events/auth-events';
+export * from './events/user-events';
 
 export { z } from 'zod';
 export type { Logger } from 'pino';
