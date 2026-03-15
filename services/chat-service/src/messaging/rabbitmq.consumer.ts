@@ -2,17 +2,17 @@ import { env } from '@/config/env';
 import { userRepository } from '@/repositories/user.repository';
 import { logger } from '@/utils/logger';
 import {
-  USER_CREATED_ROUTING_KEY,
-  USER_EVENTS_EXCHANGE,
-  type UserCreatedEvent,
+    USER_CREATED_ROUTING_KEY,
+    USER_EVENTS_EXCHANGE,
+    type UserCreatedEvent,
 } from '@chatapp/common';
 
 import {
-  connect,
-  type Channel,
-  type ChannelModel,
-  type ConsumeMessage,
-  type Replies,
+    connect,
+    type Channel,
+    type ChannelModel,
+    type ConsumeMessage,
+    type Replies,
 } from 'amqplib';
 
 let connection: ChannelModel | null = null;
