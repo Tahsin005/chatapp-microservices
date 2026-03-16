@@ -1,0 +1,18 @@
+info:
+  name: list-conversations
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: http://localhost:4000/conversations
+  headers:
+    - name: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1M2Y3Mjg4ZS1kMWRkLTQwYWYtOGQ0Mi1jMDY4OTg3MjFjYmMiLCJlbWFpbCI6InRhaHNpbkBleGFtcGxlLmNvbSIsImlhdCI6MTc3MzY2MTQ0MSwiZXhwIjoxNzczNzQ3ODQxfQ.6TbGN3LL2N3ZH1JtxYVekbLHpoDyRKE6pf-9tkeEyJ8
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

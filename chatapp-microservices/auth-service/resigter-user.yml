@@ -1,0 +1,23 @@
+info:
+  name: resigter-user
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:4000/auth/register
+  body:
+    type: json
+    data: |-
+      {
+          "email": "tahsin@example.com",
+          "displayName": "tahsin",
+          "password": "password123!"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

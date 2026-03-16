@@ -1,0 +1,18 @@
+info:
+  name: get-user-by-id
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: http://localhost:4000/users/53f7288e-d1dd-40af-8d42-c06898721cbc
+  headers:
+    - name: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1M2Y3Mjg4ZS1kMWRkLTQwYWYtOGQ0Mi1jMDY4OTg3MjFjYmMiLCJlbWFpbCI6InRhaHNpbkBleGFtcGxlLmNvbSIsImlhdCI6MTc3MzU3MzgyMCwiZXhwIjoxNzczNjYwMjIwfQ.pHvoNclEpTotZlbvlWQVuPM3714t-Qwcev4rT1N5x34
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

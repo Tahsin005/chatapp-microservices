@@ -1,0 +1,26 @@
+info:
+  name: create-user
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: http://localhost:4000/users
+  headers:
+    - name: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1M2Y3Mjg4ZS1kMWRkLTQwYWYtOGQ0Mi1jMDY4OTg3MjFjYmMiLCJlbWFpbCI6InRhaHNpbkBleGFtcGxlLmNvbSIsImlhdCI6MTc3MzYwODEwNCwiZXhwIjoxNzczNjk0NTA0fQ.ql4_IQOH9jT1uM-T6cu4-ijdBhq3HResk6nGFhnijuw
+  body:
+    type: json
+    data: |-
+      {
+          "email": "ferdous@example.com",
+          "displayName": "tahsin",
+          "password": "password123!"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

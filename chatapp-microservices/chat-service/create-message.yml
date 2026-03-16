@@ -1,0 +1,24 @@
+info:
+  name: create-message
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: http://localhost:4000/conversations/cef915a4-e328-499c-a827-ed6d52c1a656/messages
+  headers:
+    - name: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MTI4Y2M3My1iOTg5LTQ4ZGMtYTUxYy04NmI3Mzk5OTA1ZTgiLCJlbWFpbCI6InRhaHNpbkBleGFtcGxlLmNvbSIsImlhdCI6MTc3MzY4MTM5NywiZXhwIjoxNzczNzY3Nzk3fQ.Q89ToohFFlvsIPpzNixYEqwrnDN_4nIeI4-_SiTaxTo
+  body:
+    type: json
+    data: |-
+      {
+        "body": "this is a message body"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

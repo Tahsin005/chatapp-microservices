@@ -1,0 +1,18 @@
+info:
+  name: get-all-user
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: http://localhost:4000/users
+  headers:
+    - name: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MTI4Y2M3My1iOTg5LTQ4ZGMtYTUxYy04NmI3Mzk5OTA1ZTgiLCJlbWFpbCI6InRhaHNpbkBleGFtcGxlLmNvbSIsImlhdCI6MTc3MzY4MTM5NywiZXhwIjoxNzczNzY3Nzk3fQ.Q89ToohFFlvsIPpzNixYEqwrnDN_4nIeI4-_SiTaxTo
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

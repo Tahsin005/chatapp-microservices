@@ -1,0 +1,28 @@
+info:
+  name: create-conversation
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:4000/conversations
+  headers:
+    - name: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MTI4Y2M3My1iOTg5LTQ4ZGMtYTUxYy04NmI3Mzk5OTA1ZTgiLCJlbWFpbCI6InRhaHNpbkBleGFtcGxlLmNvbSIsImlhdCI6MTc3MzY4MTM5NywiZXhwIjoxNzczNzY3Nzk3fQ.Q89ToohFFlvsIPpzNixYEqwrnDN_4nIeI4-_SiTaxTo
+  body:
+    type: json
+    data: |-
+      {
+        "title": "iftar-2026",
+        "participantIds": [
+          "4128cc73-b989-48dc-a51c-86b7399905e8",
+          "3ef463cf-5dda-4cf4-9df0-8b6f91d07522"
+        ]
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

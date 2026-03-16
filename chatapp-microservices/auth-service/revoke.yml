@@ -1,0 +1,21 @@
+info:
+  name: revoke
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: http://localhost:4000/auth/revoke
+  body:
+    type: json
+    data: |-
+      {
+          "userId": "1ee7ed0f-94b9-482c-975d-21bffa44b3d0"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
