@@ -8,9 +8,12 @@ import { Router } from 'express';
 import { validateRequest } from '@chatapp/common';
 import {
     createConversationHandler,
+    createMessageHandler,
     getConversationHandler,
     listConversationsHandler,
+    listMessagesHandler,
 } from '@/controllers/conversation.controller';
+import { createMessageBodySchema, listMessagesQuerySchema } from '@/validation/message.schema';
 
 export const conversationRouter: Router = Router();
 
@@ -33,3 +36,16 @@ conversationRouter.get(
     validateRequest({ params: conversationIdParamsSchema }),
     getConversationHandler,
 );
+
+conversationRouter.post(
+    '/:id/messages',
+    validateRequest({ params: conversationIdParamsSchema, body: createMessageBodySchema }),
+    createMessageHandler,
+);
+
+conversationRouter.get(
+    '/:id/messages',
+    validateRequest({ params: conversationIdParamsSchema, query: listMessagesQuerySchema }),
+    listMessagesHandler,
+);
+
