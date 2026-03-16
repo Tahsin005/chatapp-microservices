@@ -40,3 +40,16 @@ export const listConversationHandler: RequestHandler = asyncHandler(async (req, 
     const conversations = await conversationService.listConversation({ participantId: user.id });
     res.status(201).json({ data: conversations });
 });
+
+
+export const getConversationHandler: RequestHandler = asyncHandler(async (req, res) => {
+    const user = getAuthenticatedUser(req);
+    const conversationId = parsedConversation(req.params);
+    const conversation = await conversationService.getConversationById(conversationId);
+
+    if (!conversation.participantIds.includes(user.id)) {
+        throw new HttpError(403, 'Unauthorized');
+    }
+
+    res.status(201).json({ data: conversation });
+});

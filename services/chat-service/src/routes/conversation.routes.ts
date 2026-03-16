@@ -1,5 +1,6 @@
 import {
     createConversationHandler,
+    getConversationHandler,
     listConversationHandler,
 } from '@/controllers/conversation.controller';
 import { attachAuthenticatedUser } from '@/middleware/authenticated-user';
@@ -25,4 +26,10 @@ conversationRouter.get(
     '/',
     validateRequest({ query: listConversationsQuerySchema }),
     listConversationHandler,
+);
+
+conversationRouter.get(
+    '/:id',
+    validateRequest({ params: conversationIdParamsSchema }),
+    getConversationHandler,
 );
