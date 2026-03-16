@@ -8,6 +8,8 @@ import {
 } from '@/validation/conversation.schema';
 import { conversationIdParamsSchema } from '@/validation/shared.schema';
 import { getAuthenticatedUser } from '@/utils/auth';
+import { createMessageBodySchema, listMessagesQuerySchema } from '@/validation/message.schema';
+import { messageService } from '@/services/message.service';
 
 const parsedConversation = (params: unknown) => {
     const { id } = conversationIdParamsSchema.parse(params);
@@ -52,4 +54,25 @@ export const getConversationHandler: RequestHandler = asyncHandler(async (req, r
     }
 
     res.status(201).json({ data: conversation });
+});
+
+
+export const createMessageHandler: RequestHandler = asyncHandler(async (req, res) => {
+    const user = getAuthenticatedUser(req);
+    const conversationId = parsedConversation(req.params);
+    const payload = createMessageBodySchema.parse(req.body);
+    const message = await messageService.createMessage(conversationId, user.id, payload.body);
+    res.status(201).json({ data: message });
+});
+
+export const listMessageHandler: RequestHandler = asyncHandler(async (req, res) => {
+    const user = getAuthenticatedUser(req);
+    const conversationId = parsedConversation(req.params);
+    const query = listMessagesQuerySchema.parse(req.query);
+    const after = query.after ? new Date(query.after) : undefined;
+    const messages = await messageService.listMessages(conversationId, user.id, {
+        limit: query.limit,
+        after,
+    });
+    res.json({ data: messages });
 });

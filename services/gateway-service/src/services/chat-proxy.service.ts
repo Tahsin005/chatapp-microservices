@@ -50,6 +50,21 @@ export interface ConversationDto {
     lastMessagePreview: string | null;
 }
 
+export interface ReactionDto {
+    emoji: string;
+    userId: string;
+    createdAt: string;
+}
+
+export interface MessageDto {
+    id: string;
+    conversationId: string;
+    senderId: string;
+    body: string;
+    createdAt: string;
+    reactions: ReactionDto[];
+}
+
 export interface ConversationResponse {
     data: ConversationDto;
 }
@@ -58,9 +73,21 @@ export interface ConversationListResponse {
     data: ConversationDto[];
 }
 
+export interface MessageResponse {
+    data: MessageDto;
+}
+
+export interface MessageListResponse {
+    data: MessageDto[];
+}
+
 export interface CreateConversationPayload {
     title?: string | null;
     participantIds: string[];
+}
+
+export interface CreateMessagePayload {
+    body: string;
 }
 
 export const chatProxyService = {
